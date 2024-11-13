@@ -1,0 +1,19 @@
+/* Media query per schermi con larghezza massima di 768px */
+@media (max-width: 768px) {
+    .header {
+        width: 100%;
+        flex-direction: row; /* Mantiene la struttura orizzontale anche sui dispositivi mobili */
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-size: 16px; /* Adatta la dimensione del logo sui dispositivi mobili */
+    }
+
+    .profile-circle {
+        width: 35px;  /* Riduce leggermente la dimensione del cerchio */
+        height: 35px;
+    }
+}
+  

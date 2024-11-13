@@ -1,0 +1,80 @@
+/* home/Home.css */
+
+/* L'elemento home viene posizionato in modo che l'animazione venga visualizzata sopra */
+.home {
+  position: relative; /* Aggiunta per far sì che l'animazione si sovrapponga */
+  width: 90%;
+  height: 70vh;
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  border: solid 2px #d4af37;
+}
+
+.home h1 {
+  color: #333;
+  font-size: 36px;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  width: 250px;
+  height: 120px;
+  font-size: 22px;
+  font-weight: 600;
+  background-color: #fff;
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 2px solid #d4af37;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  padding: 15px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.button:hover {
+  background-color: #d4af37;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+  transform: scale(1);
+}
+
+.button:hover i {
+  color: #fff;
+}
+
+.button i {
+  margin-right: 15px;
+  font-size: 28px;
+  color: #d4af37;
+}
+
+.button-container .button:not(:last-child) {
+  border-right: 2px solid #d4af37;
+}

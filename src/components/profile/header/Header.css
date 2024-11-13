@@ -1,0 +1,115 @@
+/* Header container */
+.header {
+    width: 90%;
+    height: 60px;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 20px;
+    margin: 0 auto;
+    z-index: 1000;
+    border-radius: 20px;
+    transition: width 0.5s ease, border-radius 0.5s ease, transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Allinea logo e profilo agli estremi, bottone al centro */
+    padding: 0 10px;
+    border: solid 0.0001px #d4af37;
+    margin-bottom: 40px;
+}
+
+/* Classe di restringimento */
+.header.shrinking {
+    display: flex;
+    width: 50px;
+    border-radius: 25px;
+    justify-content: center;
+}
+
+/* Classe per il movimento verso destra */
+.header.move-right {
+    transform: translateX(calc(50vw - 50px - 10px));
+}
+
+/* Stile per il logo */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: auto;
+    transition: opacity 0.5s ease;
+}
+
+/* Opacità del logo quando è invisibile */
+.header.shrinking .logo {
+    opacity: 0;
+}
+
+/* Bottone verde per la dashboard */
+.dashboard-button {
+    background-color: #28a745; /* Colore verde */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.dashboard-button:hover {
+    background-color: #218838; /* Colore verde scuro al passaggio del mouse */
+}
+
+/* ProfileCircle style */
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d4af37;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Media query per schermi con larghezza massima di 768px */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .logo {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .header.shrinking {
+        width: 80px;
+        height: 40px;
+        border-radius: 20px;
+    }
+
+    .header.move-right {
+        transform: translateX(calc(50vw - 40px));
+    }
+
+    .profile-circle {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Cambia il bottone nella versione mobile */
+    .dashboard-button {
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+    }
+}
+
+/* Stile per il profilo utente */
+.profile-circle:hover {
+    background-color: #c79c2b;
+}

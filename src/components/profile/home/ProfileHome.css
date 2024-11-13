@@ -1,0 +1,92 @@
+/* ProfileHome.css */
+
+/* Imposta il layout del container principale */
+.profile-container {
+    width: 90%; 
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #d4af37; /* Bordo sottile dorato */
+    border-radius: 10px;
+    margin-top: 40px; /* Aggiungi uno spazio sopra ProfileHome */
+}
+
+/* Stile per le informazioni del profilo */
+.profile-info {
+    text-align: left;
+}
+
+.profile-info h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px; /* Spazio sotto il titolo */
+}
+
+/* Sezione per ogni dato */
+.profile-info .info-section {
+    background-color: #f1f1f1; /* Grigio chiaro */
+    padding: 15px 20px; /* Aggiungi più spazio dentro */
+    margin: 15px 0; /* Spazio tra le sezioni */
+    border-radius: 8px; /* Bordo arrotondato */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Leggera ombra */
+}
+
+/* Contenitore per il dato */
+.profile-info .info-section .data-container {
+    background-color: #fff; /* Bianco per i dati */
+    padding: 15px 20px; /* Più padding per dare spazio */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Sezione di visualizzazione dati */
+.profile-info .data-display-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Sezione di input dati */
+.profile-info .data-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-info .info-section .data-container .data {
+    font-size: 18px;
+    color: #555;
+    margin-right: 30px; /* Distanza tra il dato e il pulsante */
+}
+
+/* Pulsante di modifica */
+.profile-info .edit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+}
+
+.profile-info .edit-button:hover {
+    background-color: #45a049;
+}
+
+/* Stile per gli input */
+.profile-info .info-section input {
+    width: 70%; /* Rendi gli input meno larghi */
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    box-sizing: border-box;
+}

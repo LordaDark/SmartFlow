@@ -1,0 +1,208 @@
+/* Stile base per l'header */
+.header {
+  width: 90%;
+  height: 60px;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 20px;
+  margin: 0 auto;
+  z-index: 1000;
+  border-radius: 20px;
+  transition: width 0.5s ease, border-radius 0.5s ease, transform 0.5s ease;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 10px;
+  border: solid 0.0001px #d4af37;
+}
+
+/* Pulsante del menu */
+.menu-button {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Classe di restringimento */
+.header.shrinking {
+  width: 50px;
+  border-radius: 25px;
+  justify-content: center;
+}
+
+/* Classe per il movimento verso destra */
+.header.move-right {
+  transform: translateX(calc(50vw - 50px - 10px));
+}
+
+/* Stile per il logo */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: auto;
+  transition: opacity 0.5s ease;
+}
+
+/* Opacità del logo quando è invisibile */
+.header.shrinking .logo {
+  opacity: 0;
+}
+
+/* Stile per i pulsanti di navigazione */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Pulsanti di navigazione */
+.nav-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
+  color: #000;
+}
+
+/* Sottolineatura verde chiaro */
+.nav-button.active {
+  border-bottom: 2px solid lightgreen;
+}
+
+/* Effetto al passaggio del mouse sui pulsanti */
+.nav-button:hover {
+  color: #000;
+}
+
+/* Opacità dei pulsanti quando sono invisibili */
+.header.shrinking .nav-buttons {
+  opacity: 0;
+}
+
+/* Media query per schermi con larghezza massima di 768px */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .logo {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-button {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+
+  .header.shrinking {
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+  }
+
+  .header.move-right {
+    transform: translateX(calc(50vw - 40px));
+  }
+
+  .menu-button {
+    font-size: 20px;
+  }
+}
+
+/* Media query per schermi molto piccoli (es. telefoni più stretti) */
+@media (max-width: 480px) {
+  .header {
+    width: 100%;
+  }
+
+  .nav-buttons {
+    display: none;
+  }
+
+  .menu-button {
+    display: block;
+  }
+}
+
+/* Nascondiamo il logo e i pulsanti di navigazione su dispositivi mobili */
+@media (max-width: 768px) {
+  .logo {
+    display: none;
+  }
+
+  .nav-buttons {
+    display: none;
+  }
+
+  .menu-button {
+    display: block;
+    font-size: 24px;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .header {
+    height: 60px;
+    background-color: #f5f5f5;
+    justify-content: flex-end;
+    padding: 0;
+    position: relative;
+  }
+
+  .menu-button {
+    cursor: pointer;
+    border: none;
+    color: #333;
+  }
+
+  .header-closed {
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .header.animate {
+    transition: none;
+  }
+}
+
+/* Stile per il pulsante di login */
+.nav-button.login {
+  background-color: lightgreen;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Effetto hover per il pulsante di login */
+.nav-button.login:hover {
+  background-color: #4CAF50; /* Una tonalità più scura di lightgreen */
+  color: white;
+}
+
+/* Sottolineatura per il pulsante di login quando è attivo */
+.nav-button.login.active {
+  border-bottom: 2px solid #4CAF50; /* Linea verde chiaro quando è attivo */
+}
