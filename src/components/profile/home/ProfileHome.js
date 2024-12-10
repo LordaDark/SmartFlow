@@ -40,72 +40,45 @@ const ProfileHome = () => {
         }
       } else {
         // Imposta i dati dell'utente se l'accesso è tramite Google
-        const { displayName, email, phoneNumber } = auth.currentUser;
-        setUpdatedData({
-          firstName: displayName?.split(' ')[0] || '',
-          lastName: displayName?.split(' ')[1] || '',
-          email: email || '',
-          phoneNumber: phoneNumber || '',
-          job: '', // Aggiungi un valore predefinito per il lavoro
-        });
+        const data = { email: auth.currentUser.email, firstName: auth.currentUser.displayName || '', lastName: '' };
+        setUserData(data);
+        setUpdatedData(data);
+        setEmailVerified(auth.currentUser.emailVerified);
       }
     }
   };
 
   useEffect(() => {
-    fetchUserData(); // Chiamata per caricare i dati all'avvio
+    fetchUserData(); // Carica i dati appena il componente è montato
   }, []);
 
+  const handleUpdate = async () => {
+    if (auth.currentUser) {
+      const userRef = doc(db, 'users', auth.currentUser.uid);
+      await updateDoc(userRef, updatedData);
+      setNotification({ message: 'Dati aggiornati con successo', type: 'success' });
+    }
+  };
+
+  const handleEmailVerification = async () => {
+    if (auth.currentUser && !emailVerified) {
+      await sendEmailVerification(auth.currentUser);
+      setNotification({ message: 'Email inviata per la verifica', type: 'info' });
+    }
+  };
+
   return (
-    <div className="profile-container">
-      {notification && (
-        <Notification 
-          message={notification.message} 
-          type={notification.type} 
-          onClose={() => setNotification(null)} // Funzione per chiudere la notifica
-        />
-      )}
-
-      <div className="profile-info">
-        <h2>Profilo Utente</h2>
-        {userData && (
-          <>
-            {/* Sezione Email */}
-            <EmailSection
-              userData={userData}
-              updatedData={updatedData}
-              setUpdatedData={setUpdatedData}
-              emailVerified={emailVerified}
-              setEmailVerified={setEmailVerified}
-              setNotification={setNotification}
-            />
-
-            {/* Sezione Numero di Telefono */}
-            <PhoneSection
-              userData={userData}
-              updatedData={updatedData}
-              setUpdatedData={setUpdatedData}
-              setNotification={setNotification}
-            />
-
-            {/* Sezione Nome */}
-            <NameSection
-              userData={userData}
-              updatedData={updatedData}
-              setUpdatedData={setUpdatedData}
-              setNotification={setNotification}
-            />
-
-            {/* Sezione Professione */}
-            <JobSection
-              userData={userData}
-              updatedData={updatedData}
-              setUpdatedData={setUpdatedData}
-              setNotification={setNotification}
-            />
-          </>
-        )}
-      </div>
+    <div className="profile-home">
+      {notification && <Notification message={notification.message} type={notification.type} />}
+      <EmailSection email={updatedData.email} onEmailChange={(e) => setUpdatedData({ ...updatedData, email: e.target.value })} />
+      <PhoneSection phoneNumber={updatedData.phoneNumber} onPhoneChange={(e) => setUpdatedData({ ...updatedData, phoneNumber: e.target.value })} />
+      <NameSection firstName={updatedData.firstName} lastName={updatedData.lastName} onNameChange={(e) => setUpdatedData({ ...updatedData, [e.target.name]: e.target.value })} />
+      <JobSection job={updatedData.job} onJobChange={(e) => setUpdatedData({ ...updatedData, job: e.target.value })} />
+      
+      <button className="update-button" onClick={handleUpdate}>Modifica</button>
+      <button className="verify-email-button" onClick={handleEmailVerification}>
+        {emailVerified ? 'Email Verificata' : 'Verifica Email'}
+      </button>
     </div>
   );
 };

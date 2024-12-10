@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase authentication
 import { Link } from 'react-router-dom'; // Importa Link per la navigazione
 import ProfileCircle from '../../../profile/ProfileCircle.js'; // Import ProfileCircle component
@@ -10,7 +10,7 @@ function Header() {
   const [isMovedRight, setIsMovedRight] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const [areButtonsVisible, setAreButtonsVisible] = useState(true);
-  let lastScrollY = window.scrollY;
+  const lastScrollY = useRef(0); // Usa useRef per evitare il re-rendering
 
   // Check if user is logged in
   useEffect(() => {
@@ -25,12 +25,13 @@ function Header() {
     const currentScrollY = window.scrollY;
     if (window.innerWidth <= 768) return; // Exit if on mobile
 
-    if (currentScrollY > lastScrollY) {
+    if (currentScrollY > lastScrollY.current) {
       activateAnimation();
     } else {
       deactivateAnimation();
     }
-    lastScrollY = currentScrollY;
+
+    lastScrollY.current = currentScrollY; // Aggiorna il valore
   };
 
   const activateAnimation = () => {
@@ -59,7 +60,7 @@ function Header() {
   return (
     <header className={`header ${isShrinking ? 'shrinking' : ''} ${isMovedRight ? 'move-right' : ''}`}>
       {isLogoVisible && <div className="logo">SmartFlow</div>}
-      
+
       {/* Bottone verde per andare alla dashboard */}
       {isLoggedIn && areButtonsVisible && (
         <Link to="/dashboard" className="dashboard-button">

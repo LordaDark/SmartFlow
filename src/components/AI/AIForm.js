@@ -21,6 +21,7 @@ const AIForm = () => {
         message: 'Devi essere autenticato per aggiungere un progetto.',
         type: 'error',
       });
+      setTimeout(() => setNotification(null), 5000); // Rimuovi la notifica dopo 5 secondi
       return;
     }
 
@@ -39,6 +40,7 @@ const AIForm = () => {
         message: 'Progetto aggiunto con successo!',
         type: 'success',
       });
+      setTimeout(() => setNotification(null), 5000); // Rimuovi la notifica dopo 5 secondi
 
       // Resetta i campi del modulo
       setProjectName('');
@@ -49,6 +51,7 @@ const AIForm = () => {
         message: 'Errore durante l\'aggiunta del progetto.',
         type: 'error',
       });
+      setTimeout(() => setNotification(null), 5000); // Rimuovi la notifica dopo 5 secondi
     }
   };
 
