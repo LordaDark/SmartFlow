@@ -66,6 +66,6 @@
     "globals": "^15.13.0"
   },
   "rules": {
-    "no-prototype-builtins": "off"
+    "no-unused-vars": ["warn", { "varsIgnorePattern": "auth|docRef" }]
   }
 }
