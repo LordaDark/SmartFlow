@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase authentication
 import { Link } from 'react-router-dom'; // Importa Link per la navigazione
-import ProfileCircle from '../../profile/ProfileCircle'; // Import ProfileCircle component
+import ProfileCircle from '../../profile/ProfileCircle.js'; // Import ProfileCircle component
 import './Header.css';
 
 function Header() {
@@ -61,7 +61,7 @@ function Header() {
       {isLogoVisible && <div className="logo">SmartFlow</div>}
       
       {/* Bottone verde per andare alla dashboard */}
-      {isLoggedIn && (
+      {isLoggedIn && areButtonsVisible && (
         <Link to="/dashboard" className="dashboard-button">
           Vai alla Dashboard
         </Link>

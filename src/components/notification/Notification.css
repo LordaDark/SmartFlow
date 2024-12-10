@@ -1,0 +1,36 @@
+/* Scuro lo sfondo quando appare la notifica */
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Sfondo scurito */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.notification-box {
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    max-width: 80%;
+}
+
+/* Stile per notifiche di successo */
+.notification-overlay.success .notification-box {
+    background-color: #d4edda;
+    border: 2px solid #28a745;
+    color: #155724;
+}
+
+/* Stile per notifiche di errore */
+.notification-overlay.error .notification-box {
+    background-color: #f8d7da;
+    border: 2px solid #dc3545;
+    color: #721c24;
+}

@@ -1,0 +1,64 @@
+/* Stile principale della pagina */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.home-container {
+    display: flex;
+    width: 100%; /* Copre tutta la larghezza */
+    height: 100vh; /* Copre tutta l'altezza */
+}
+
+.chat-container {
+    display: flex;
+    justify-content: center; /* Centra il contenuto orizzontalmente */
+    padding: 20px;
+    max-height: 500px;
+}
+
+.chat-left-right {
+    display: flex;
+    width: 100%; /* Larghezza complessiva per l'area delle chat */
+    height: 81vh; /* Altezza uniforme per l'intera area */
+}
+
+/* Stile per la sezione sinistra */
+.left-container {
+    flex: 1; /* Occupa una parte della larghezza */
+    border-right: 1px solid #ccc; /* Linea divisoria */
+    background-color: #f8f8f8;
+    overflow-y: auto; /* Scorrimento interno verticale */
+    box-sizing: border-box; /* Include padding e border nelle dimensioni */
+}
+
+/* Stile per la sezione destra */
+.right-container {
+    flex: 2; /* Occupa due parti della larghezza */
+    background-color: #fff;
+    overflow-y: auto; /* Scorrimento interno verticale */
+    box-sizing: border-box; /* Include padding e border nelle dimensioni */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    width: 70%;
+    overflow: hidden;
+    height: 95%;
+}
+
+.right-container .logo-container {
+    text-align: center;
+    margin-bottom: 20px; /* Distanza tra logo e scritta */
+}
+
+.right-container .logo {
+    width: 150px; /* Imposta la dimensione del logo */
+    margin-bottom: 10px; /* Spazio tra logo e scritta */
+}
+
+.right-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+}

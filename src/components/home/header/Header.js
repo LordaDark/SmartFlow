@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase authentication
-import ProfileCircle from '../../profile/ProfileCircle'; // Import ProfileCircle component
+import ProfileCircle from '../../profile/ProfileCircle.js'; // Import ProfileCircle component
 import './Header.css';
 import './HeaderMobile.css';
 

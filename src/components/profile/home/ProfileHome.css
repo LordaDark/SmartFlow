@@ -90,3 +90,33 @@
     background-color: #fff;
     box-sizing: border-box;
 }
+
+/* Pulsante di modifica e verifica */
+.profile-info .edit-button,
+.profile-info .verify-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.profile-info .edit-button:hover,
+.profile-info .verify-button:hover {
+    background-color: #45a049;
+}
+
+/* Allineamento display dati */
+.data-display-container {
+    display: flex;
+    align-items: center;
+}
+
+.verification-status {
+    margin-left: auto;
+    padding-right: 10px;
+    font-weight: bold;
+}

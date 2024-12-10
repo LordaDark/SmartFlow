@@ -1,0 +1,58 @@
+/* src/components/Home/HeaderProject.css */
+
+.header-project {
+background-color: #d4af37;
+color: white;
+padding: 10px 20px;
+text-align: center;
+border-radius: 10px;
+margin-bottom: 20px;
+font-weight: bold;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+width: 90%;
+height: 30px;
+display: flex;
+align-items: center;
+justify-content: space-between; /* Allinea i pulsanti a destra */
+transition: background-color 0.3s, opacity 0.3s;
+}
+
+.header-project h2 {
+font-size: 24px;
+font-weight: bold;
+color: #333;
+}
+
+.header-project.inactive {
+background-color: rgba(212, 175, 55, 0.5);
+pointer-events: none;
+opacity: 0.6;
+}
+
+.header-project-actions {
+display: flex;
+gap: 10px;
+}
+
+.header-project button {
+padding: 5px 15px;
+font-size: 14px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.header-project button:disabled {
+background-color: #ccc;
+cursor: not-allowed;
+}
+
+.btn-deselect-all {
+background-color: #4caf50;
+color: white;
+}
+
+.btn-delete-selected {
+background-color: #f44336;
+color: white;
+}

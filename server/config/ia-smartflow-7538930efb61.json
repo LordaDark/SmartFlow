@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ia-smartflow",
+  "private_key_id": "7538930efb61f6e2d40a960640765d3905934dbd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCYQd5N2PgylRJi\nN2snuMZe0CaX5zuvO6Jc16I4m10nTJ08SyLCjTDsSDqd2cAOo1NwODaEMMT+CZSY\ncte0q1R5/Nl1erWe2wHONquqjZfrdW++0XD2rCljbuhlVvKnjIMvvlaa67FaWcwD\nC2hc8vq372ZC7B/IztxizW9O7MfZnBaMCXDBTKyFa0xSrA+4j/Bb96DLR1RvXmeF\ndFy9h94LQmxnPYsFYpcCoMKi2b05szwgMx0ojVrlazyfUC1Mi0SS3nDu3dFRKnfc\npCx8nKqell0fFX3eA/LQcGwky8oZJLqZzoJQz/3dtl0CRTd150k9j+3olzgOLeUj\nCFgNIr35AgMBAAECggEAAMe1C6qitcXsL/ns22l1c07FAGxjF0GKm1orxa4MZBDx\nNieorwGAnisE25SeGxUYJWuMT/WBcE98rzS0kl7nyPiB5ZUgA4dHl5atHuuoqNKu\n22OleE85XaKOn9be2Y2h0rnfJd4y2ltxSIJsqvb24pupVPiXLD4l8jWmQGvFcO+f\n2AfETYoLV6UlAo2cQMxGFx2jKQ1Uhr83PR/4blbEd71uSBSNvt2KEcWQiqSe73Zz\ne9iILOm8mSXHUlPOZo+K4CP+Hc4BdgM35lIXHW9uPbE1J2Ell030TXlFpojeSPWD\nAtTKSVD6e1EKxdoZUmenYolP3nl7sS3RTV09UzkbHwKBgQDRIA4++R+PwJ/QdP07\nbZb7mKkkKVSzpWHoGp5r4F7oFuxScHQ3onn8KNnOMRKYcb7OVuqPmO3CHG+EWHBU\nKDdvEcGXHTa931uotRg51VHwXv/537lwp9KIZ+5036/GM5hdoNrAF/FRgqUE6zpT\ni5SKf3RV1VPIkpUh3gKzrsGQfwKBgQC6YqOlinwOP3Db4qfX2RVb0wjKMpdoegXg\nCSUGB4oKbKdVh+3/sadAmNE54avNGMzhOble4RpVSvS37Hzx25AAqF4OogTdhMkM\nmypbPrNeEZxi6KdHTKYkpl4l0HMCxpvMExRXyZOfcUSS7equ0Ty91c9DgPFMBFRh\nN92+lzr1hwKBgQCBul/8ArDojTbWquw4hHhH5WDvtM/9jVeaE4E5LHvTf/zj+yyt\nIpaHrZPHzDtb5BvYhqSFpfnAE8G+GNq96iDRPvOX2aCO0tNaadT4c3OcKGKk0HuJ\n/iGlSsvrJqQ00ObxFgr9ZRznUqMp1P5eu1TPQdeaM3cBEqV+1+lXK86Z4wKBgQCY\nR8keknPjDDBAZwHtF98cg+J1mTodUT0Fm1MVhwlglP9uoT1xoIte+rxPBzNfwbh6\n97edblsefrxMnTpEPLh94RHf8L364ueEli3YGPVhkQ/tu9oYJebEoOzhBltBVFWs\nOZZwVzB2n4uAZERPCoMPMuZBZ9M94XezanqQomy4dwKBgQCGs0rQx9qTpc9kNjRa\nVzdPkdG9g2Bq/0qITJ2YkQJM8FjPoPoGNe7oFQSylepN6bn6aH4jhCrjLC3Xfk/d\nxBij9lBoBUhWPxCHJRKhTR9XLAr0jGD8emwzcgFD6aaxcADAVMIVlWTvwDvYyaLm\nt9vvgDxeerOW3j2ZBHFpf0xT9Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "smartflow@ia-smartflow.iam.gserviceaccount.com",
+  "client_id": "105232224864883422436",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/smartflow%40ia-smartflow.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

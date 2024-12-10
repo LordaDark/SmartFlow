@@ -1,0 +1,44 @@
+/* Stile del contenitore della barra di input */
+.chat-input-container {
+display: flex;
+justify-content: space-between;
+width: 100%;
+padding: 8px 0;  /* Ridotto il padding verticale */
+margin-top: 8px; /* Spazio sopra la barra */
+border-top: 1px solid #ddd;
+align-items: center; /* Centrato verticalmente l'input e il bottone */
+}
+
+/* Stile dell'input */
+.chat-input {
+width: 85%; /* Ridotto leggermente per dare spazio al bottone */
+padding: 10px 12px; /* Ridotto il padding per abbassare l'altezza */
+font-size: 14px; /* Font più piccolo */
+border-radius: 20px; /* Arrotondamento più sottile */
+border: 1px solid #ccc;
+outline: none;
+box-sizing: border-box;
+height: 36px; /* Altezza fissa più piccola */
+}
+
+.chat-input:focus {
+border-color: #28a745;
+box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Stile del bottone */
+.chat-send-button {
+width: 12%;  /* Larghezza ridotta */
+padding: 10px; /* Ridotto il padding per abbassare l'altezza */
+background-color: #28a745;
+color: white;
+border: none;
+border-radius: 20px; /* Arrotondamento più sottile */
+cursor: pointer;
+font-weight: bold;
+height: 36px; /* Altezza fissa per il bottone */
+}
+
+.chat-send-button:hover {
+background-color: #218838;
+}

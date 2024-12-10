@@ -1,14 +1,14 @@
 // Dashboard.js
 import React from 'react';
-import Home from './home/Home';
-import Header from './header/Header';  // Importa il componente Header
+import { Routes, Route } from 'react-router-dom';
+import Home from './home/Home.js';
+import Header from './header/Header.js';  // Importa il componente Header
 
 function Dashboard() {
   return (
     <div className="dashboard">
-      <Header />  {/* Aggiungi l'header sopra il contenuto */}
+      <Header /> 
       <Home />
-      {/* Qui puoi aggiungere altri componenti che comporranno la dashboard */}
     </div>
   );
 }

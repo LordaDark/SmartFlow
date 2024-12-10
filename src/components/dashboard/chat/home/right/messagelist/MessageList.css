@@ -1,0 +1,107 @@
+/* Stile comune per tutti i messaggi */
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effetto in rilievo comune per entrambi */
+}
+
+/* Messaggio dell'utente */
+.user-message {
+    align-self: flex-start;
+    background-color: #d4f8e7; /* Verde chiaro per il messaggio dell'utente */
+    color: #333;
+    border-radius: 10px 10px 0 10px; /* Bordo arrotondato solo sopra */
+}
+
+/* Messaggio di un altro utente */
+.other-message {
+    align-self: flex-start; /* Al posto di flex-end per allinearlo a sinistra */
+    background-color: #f1f1f1; /* Grigio chiaro per il messaggio dell'altro utente */
+    color: #333;
+    border-radius: 10px 10px 0 10px; /* Bordo arrotondato solo sopra */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra identica */
+    margin: 15px;
+}
+
+/* Contenuto del messaggio */
+.message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* Header del messaggio (nome, logo) */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+/* Nome dell'autore del messaggio */
+.message-header .author {
+    font-weight: bold;
+    display: flex;
+    text-align: right;
+}
+
+/* Logo accanto al nome del mittente */
+.message-header .logo-container {
+    margin-left: 10px;
+}
+
+/* Testo del messaggio */
+.text {
+    font-size: 1em;
+    margin: 0;
+}
+
+/* Timestamp del messaggio */
+.timestamp {
+    font-size: 0.8em;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Stile della lista dei messaggi */
+.message-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    max-height: 80vh;
+    background-color: #fff; /* Colore di sfondo della lista dei messaggi */
+}
+
+/* Aggiungi un po' di spaziatura tra i messaggi */
+.message-list .message + .message {
+    margin-top: 10px;
+}
+
+/* Aggiungi una classe per il logo (profilo) */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd; /* Colore di sfondo per i logo */
+    font-size: 1.2em;
+    color: white;
+}
+
+/* Aggiungi un'ombra leggera sui messaggi */
+.message.user-message {
+    box-shadow: 0 4px 6px rgba(0, 128, 0, 0.2); /* Ombra verde per i messaggi dell'utente */
+}
+
+.message.other-message {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra più leggera per i messaggi degli altri */
+}

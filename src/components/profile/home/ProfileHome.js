@@ -1,143 +1,110 @@
 import React, { useEffect, useState } from 'react';
-import { auth, db } from '../../login/firebaseConfig/firebaseConfig'; 
-import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Importa updateDoc per aggiornare i dati
+import { auth, db } from '../../firebaseConfig/firebaseConfig.js';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { sendEmailVerification } from 'firebase/auth';
+import Notification from '../../notification/Notification.js';
+import EmailSection from './ProfileSections/EmailSection.js';
+import PhoneSection from './ProfileSections/PhoneSection.js';
+import NameSection from './ProfileSections/NameSection.js';
+import JobSection from './ProfileSections/JobSection.js';
 import './ProfileHome.css';
 
 const ProfileHome = () => {
-  const [userData, setUserData] = useState(null);
-  const [isEditingEmail, setIsEditingEmail] = useState(false); // Stato per la modifica dell'email
-  const [isEditingName, setIsEditingName] = useState(false); // Stato per la modifica del nome
-  const [isEditingPhone, setIsEditingPhone] = useState(false); // Stato per la modifica del telefono
-
+  const [userData, setUserData] = useState(null); // Stato per i dati dell'utente dal DB
+  const [emailVerified, setEmailVerified] = useState(false); // Stato per la verifica dell'email
   const [updatedData, setUpdatedData] = useState({
     email: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
-  });
+    job: '',
+  }); // Stato per aggiornamenti in tempo reale
+  const [notification, setNotification] = useState(null); // Stato per le notifiche
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (auth.currentUser) {
-        const userRef = doc(db, "users", auth.currentUser.uid);
+  // Funzione per caricare i dati dell'utente
+  const fetchUserData = async () => {
+    if (auth.currentUser) {
+      const isGoogleLogin = auth.currentUser.providerData.some(
+        (provider) => provider.providerId === 'google.com'
+      );
+
+      if (!isGoogleLogin) {
+        // Carica i dati utente da Firestore se l'utente non è loggato con Google
+        const userRef = doc(db, 'users', auth.currentUser.uid);
         const userSnapshot = await getDoc(userRef);
         if (userSnapshot.exists()) {
-          setUserData(userSnapshot.data());
-          setUpdatedData(userSnapshot.data()); // Pre-carica i dati nel form di modifica
+          const data = userSnapshot.data();
+          setUserData(data); // Imposta i dati utente
+          setUpdatedData(data); // Imposta i dati aggiornabili
+          setEmailVerified(auth.currentUser.emailVerified); // Verifica email
         }
-      }
-    };
-    fetchUserData();
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedData({
-      ...updatedData,
-      [name]: value,
-    });
-  };
-
-  const handleSave = async (field) => {
-    if (auth.currentUser) {
-      const userRef = doc(db, "users", auth.currentUser.uid);
-      await updateDoc(userRef, updatedData); // Aggiorna i dati su Firestore
-      setUserData(updatedData); // Aggiorna i dati visualizzati
-      if (field === 'email') {
-        setIsEditingEmail(false);
-      } else if (field === 'name') {
-        setIsEditingName(false);
-      } else if (field === 'phone') {
-        setIsEditingPhone(false);
+      } else {
+        // Imposta i dati dell'utente se l'accesso è tramite Google
+        const { displayName, email, phoneNumber } = auth.currentUser;
+        setUpdatedData({
+          firstName: displayName?.split(' ')[0] || '',
+          lastName: displayName?.split(' ')[1] || '',
+          email: email || '',
+          phoneNumber: phoneNumber || '',
+          job: '', // Aggiungi un valore predefinito per il lavoro
+        });
       }
     }
   };
 
-  if (!userData) {
-    return <div>Caricamento...</div>;
-  }
+  useEffect(() => {
+    fetchUserData(); // Chiamata per caricare i dati all'avvio
+  }, []);
 
   return (
     <div className="profile-container">
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type} 
+          onClose={() => setNotification(null)} // Funzione per chiudere la notifica
+        />
+      )}
+
       <div className="profile-info">
         <h2>Profilo Utente</h2>
-        
-        {/* Sezione Email */}
-        <div className="info-section">
-          <p><strong>Email:</strong></p>
-          <div className="data-container">
-            {isEditingEmail ? (
-              <div className="data-input-container">
-                <input 
-                  type="email" 
-                  name="email" 
-                  value={updatedData.email} 
-                  onChange={handleChange} 
-                />
-                <button onClick={() => handleSave('email')} className="edit-button">Salva</button>
-              </div>
-            ) : (
-              <div className="data-display-container">
-                <p>{userData.email}</p>
-                <button onClick={() => setIsEditingEmail(true)} className="edit-button">Modifica</button>
-              </div>
-            )}
-          </div>
-        </div>
+        {userData && (
+          <>
+            {/* Sezione Email */}
+            <EmailSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              emailVerified={emailVerified}
+              setEmailVerified={setEmailVerified}
+              setNotification={setNotification}
+            />
 
-        {/* Sezione Nome */}
-        <div className="info-section">
-          <p><strong>Nome:</strong></p>
-          <div className="data-container">
-            {isEditingName ? (
-              <div className="data-input-container">
-                <input 
-                  type="text" 
-                  name="firstName" 
-                  value={updatedData.firstName} 
-                  onChange={handleChange} 
-                  placeholder="Nome"
-                />
-                <input 
-                  type="text" 
-                  name="lastName" 
-                  value={updatedData.lastName} 
-                  onChange={handleChange} 
-                  placeholder="Cognome"
-                />
-                <button onClick={() => handleSave('name')} className="edit-button">Salva</button>
-              </div>
-            ) : (
-              <div className="data-display-container">
-                <p>{userData.firstName} {userData.lastName}</p>
-                <button onClick={() => setIsEditingName(true)} className="edit-button">Modifica</button>
-              </div>
-            )}
-          </div>
-        </div>
+            {/* Sezione Numero di Telefono */}
+            <PhoneSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
 
-        {/* Sezione Numero di telefono */}
-        <div className="info-section">
-          <p><strong>Numero di telefono:</strong></p>
-          <div className="data-container">
-            {isEditingPhone ? (
-              <div className="data-input-container">
-                <input 
-                  type="text" 
-                  name="phoneNumber" 
-                  value={updatedData.phoneNumber} 
-                  onChange={handleChange} 
-                />
-                <button onClick={() => handleSave('phone')} className="edit-button">Salva</button>
-              </div>
-            ) : (
-              <div className="data-display-container">
-                <p>{userData.phoneNumber}</p>
-                <button onClick={() => setIsEditingPhone(true)} className="edit-button">Modifica</button>
-              </div>
-            )}
-          </div>
-        </div>
+            {/* Sezione Nome */}
+            <NameSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+
+            {/* Sezione Professione */}
+            <JobSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 // SignupApp.js
 import React from 'react';
-import SignupHome from './home/SignupHome';
+import SignupHome from './home/SignupHome.js';
 
 function SignupApp({ toggleLogin }) {
   return (

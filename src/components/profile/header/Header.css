@@ -1,23 +1,4 @@
 /* Header container */
-.header {
-    width: 90%;
-    height: 60px;
-    background-color: #f5f5f5;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 20px;
-    margin: 0 auto;
-    z-index: 1000;
-    border-radius: 20px;
-    transition: width 0.5s ease, border-radius 0.5s ease, transform 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Allinea logo e profilo agli estremi, bottone al centro */
-    padding: 0 10px;
-    border: solid 0.0001px #d4af37;
-    margin-bottom: 40px;
-}
-
 /* Classe di restringimento */
 .header.shrinking {
     display: flex;
@@ -29,14 +10,6 @@
 /* Classe per il movimento verso destra */
 .header.move-right {
     transform: translateX(calc(50vw - 50px - 10px));
-}
-
-/* Stile per il logo */
-.logo {
-    font-size: 20px;
-    font-weight: bold;
-    margin-right: auto;
-    transition: opacity 0.5s ease;
 }
 
 /* Opacità del logo quando è invisibile */
@@ -56,6 +29,7 @@
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s;
+    margin-left: 10px;
 }
 
 .dashboard-button:hover {
@@ -112,4 +86,11 @@
 /* Stile per il profilo utente */
 .profile-circle:hover {
     background-color: #c79c2b;
+}
+
+/* Quando shrinking è attivo, nasconde anche il bottone */
+.header.shrinking .dashboard-button {
+    opacity: 0;
+    pointer-events: none; /* Impedisce l'interazione quando il bottone è invisibile */
+    transition: opacity 0.5s ease;
 }

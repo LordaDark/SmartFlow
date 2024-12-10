@@ -1,7 +1,7 @@
 // LoginApp.js
 import React, { useState } from 'react';
-import LoginHome from './home/LoginHome';
-import SignupApp from './signup/SignupApp';
+import LoginHome from './home/LoginHome.js';
+import SignupApp from './signup/SignupApp.js';
 
 function LoginApp() {
   const [isLogin, setIsLogin] = useState(true);

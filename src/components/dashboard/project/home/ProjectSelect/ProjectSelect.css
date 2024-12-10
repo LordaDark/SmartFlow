@@ -1,0 +1,24 @@
+.project-select-circle {
+position: absolute;
+top: 10px;
+right: 10px;
+width: 20px;
+height: 20px;
+border: 2px solid #d4af37; /* Bordo dorato */
+border-radius: 50%;
+background-color: transparent;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+}
+
+.project-select-circle.selected {
+background-color: #d4af37; /* Sfondo dorato */
+}
+
+.checkmark {
+color: white;
+font-size: 14px;
+font-weight: bold;
+}

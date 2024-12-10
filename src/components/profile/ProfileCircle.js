@@ -1,8 +1,9 @@
+// ProfileCircle.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // Importa useLocation
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { auth } from '../login/firebaseConfig/firebaseConfig';
+import { auth } from '../login/firebaseConfig/firebaseConfig.js';
 
 const db = getFirestore();
 
@@ -19,9 +20,10 @@ function ProfileCircle() {
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setUserName(docSnap.data().firstName);
+          const userData = docSnap.data();
+          setUserName(userData.firstName || 'Utente');
           setProfilePicture(
-            docSnap.data().profilePicture || generateDefaultProfilePic(docSnap.data().firstName)
+            userData.profilePicture || generateDefaultProfilePic(userData.firstName)
           );
         }
       };
@@ -45,7 +47,11 @@ function ProfileCircle() {
 
   return (
     <div className="profile-circle" title={userName} onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <img src={profilePicture} alt="Profile" className="profile-image" />
+      {profilePicture ? (
+        <img src={profilePicture} alt="Profile" className="profile-image" />
+      ) : (
+        <div className="profile-image-placeholder">{userName.charAt(0).toUpperCase()}</div>
+      )}
     </div>
   );
 }

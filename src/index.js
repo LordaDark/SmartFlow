@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';  // Importa Router
-import App from './App';  // Assicurati che il componente App esista
+import App from './App.js';  // Aggiungi l'estensione .js
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

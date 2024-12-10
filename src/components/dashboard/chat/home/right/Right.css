@@ -1,0 +1,72 @@
+.right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Allinea gli elementi al centro */
+    justify-content: flex-start; /* Allinea gli elementi in alto */
+    height: 100%; /* Assicurati che la lunghezza del contenitore copra tutta l'altezza disponibile */
+    overflow-y: auto; /* Permette lo scroll se il contenuto è troppo grande */
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.feedback {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: green;
+}
+
+.message-list {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Riduce lo spazio tra i messaggi */
+}
+
+/* Stile comune per tutti i messaggi */
+.message {
+    max-width: 70%; /* Occupa al massimo il 70% dello spazio */
+    min-width: 10%; /* Occupa almeno il 30% dello spazio */
+    min-height: 35px; /* Altezza minima del messaggio */
+    padding: 8px 12px; /* Ridotto il padding */
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    word-wrap: break-word; /* Spezza le parole lunghe */
+    margin-right: 10px;
+}
+
+/* Messaggi dell'utente */
+.user-message {
+    align-self: flex-end;
+    background-color: #d1f8d1;
+    border-top-right-radius: 0;
+    text-align: right; /* Allinea il testo a destra */
+}
+
+/* Contenitore per il logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px; /* Dimensione fissa per il logo */
+    height: 500px; /* Dimensione fissa per il logo */
+    border-radius: 50%; /* Rende il logo rotondo */
+    overflow: hidden;
+    background: none;
+}
+
+.ai-chat-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

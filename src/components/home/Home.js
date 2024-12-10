@@ -1,13 +1,14 @@
 import React from 'react';
-import Header from './header/Header';
-import Hero from './hero-section/Hero-section';
-import About from './about/About';
-import Service from './service/Service';
-import Footer from './footer/Footer';
+import Header from './header/Header.js';
+import Hero from './hero-section/Hero-section.js';
+import About from './about/About.js';
+import Service from './service/Service.js';
+import Footer from './footer/Footer.js';
+import './Home.css';
 
 function Home() {
   return (
-    <div>
+    <div id='home'>
       <Header />
       <Hero />
       <About />

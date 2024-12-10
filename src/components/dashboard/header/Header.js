@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Usa useNavigate invece di useHistory
-import ProfileCircle from '../../profile/ProfileCircle'; // Importa il componente del profilo
-import { auth } from '../../login/firebaseConfig/firebaseConfig'; // Assicurati di importare Firebase se lo stai usando
+import ProfileCircle from '../../profile/ProfileCircle.js'; // Importa il componente del profilo
+import { auth } from '../../login/firebaseConfig/firebaseConfig.js'; // Assicurati di importare Firebase se lo stai usando
 import './Header.css';
 import './HeaderMobile.css';
 
@@ -26,7 +26,7 @@ function Header() {
           <div className="logo">SmartFlow</div>
         </Link>
       </div>
-      <div className='right'>
+      <div className='right' id='right'>
         {/* Pulsante di logout */}
         <button className="logout-button" onClick={handleLogout}>Logout</button>
 

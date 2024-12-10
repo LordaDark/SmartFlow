@@ -1,0 +1,35 @@
+/* Stile per la sezione sinistra */
+.chat-left {
+    width: 300px; /* Larghezza per la lista delle chat */
+    height: 95%; /* Occupa tutta l'altezza */
+    border-right: 1px solid #ccc; /* Linea divisoria */
+    background-color: #f8f8f8;
+    overflow-y: auto; /* Scorrimento verticale */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.chat-list-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-list-item:hover {
+    background-color: #f1f1f1;
+}
+
+.chat-button {
+    background-color: #4CAF50; /* Colore verde */
+    color: white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+    background-color: #45a049;
+}

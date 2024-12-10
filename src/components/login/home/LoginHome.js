@@ -1,8 +1,7 @@
-// src/components/login/LoginHome.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig/firebaseConfig'; // Importa il tuo auth configurato
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../firebaseConfig/firebaseConfig.js'; // Importa il tuo auth configurato
 import './LoginHome.css';
 
 function LoginHome({ toggleLogin }) {
@@ -11,6 +10,7 @@ function LoginHome({ toggleLogin }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Funzione per il login con email e password
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -22,6 +22,21 @@ function LoginHome({ toggleLogin }) {
       .catch((error) => {
         setError(error.message); // Mostra l'errore in caso di fallimento
         console.error("Errore login:", error);
+      });
+  };
+
+  // Funzione per il login con Google
+  const handleGoogleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log("Login Google riuscito:", user);
+        navigate('/dashboard'); // Redirigi alla dashboard dopo login
+      })
+      .catch((error) => {
+        setError(error.message); // Mostra l'errore in caso di fallimento
+        console.error("Errore login Google:", error);
       });
   };
 
@@ -47,6 +62,11 @@ function LoginHome({ toggleLogin }) {
           <button type="submit">Accedi</button>
         </form>
         {error && <p className="error-message">{error}</p>}
+        
+        <button className="google-login-button" onClick={handleGoogleLogin}>
+          Accedi con Google
+        </button>
+
         <button className="toggle-button" onClick={toggleLogin}>
           Non hai un account? Registrati
         </button>
