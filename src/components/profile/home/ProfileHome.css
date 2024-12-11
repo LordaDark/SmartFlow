@@ -62,7 +62,11 @@
 }
 
 /* Pulsante di modifica */
-.profile-info .edit-button {
+.profile-info .edit-button,
+.profile-info .upload-button,
+.profile-info .delete-button,
+.profile-info .cancel-button,
+.profile-info .save-button {
     background-color: #4CAF50;
     color: white;
     padding: 8px 16px;
@@ -72,9 +76,14 @@
     font-size: 16px;
     display: inline-block;
     text-align: center;
+    margin-left: 10px;
 }
 
-.profile-info .edit-button:hover {
+.profile-info .edit-button:hover,
+.profile-info .upload-button:hover,
+.profile-info .delete-button:hover,
+.profile-info .cancel-button:hover,
+.profile-info .save-button:hover {
     background-color: #45a049;
 }
 
@@ -119,4 +128,26 @@
     margin-left: auto;
     padding-right: 10px;
     font-weight: bold;
+}
+
+/* Stile della barra di upload */
+.upload-bar {
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Stato attivo per il drag-and-drop */
+.upload-bar.drag-active {
+    background-color: #e0ffe0;
+    border-color: #0f0;
+}
+
+.upload-bar.upload-complete {
+    background-color: green;
+    color: white;
 }

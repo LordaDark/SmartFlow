@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../firebaseConfig/firebaseConfig.js';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { sendEmailVerification } from 'firebase/auth';
@@ -7,40 +7,30 @@ import EmailSection from './ProfileSections/EmailSection.js';
 import PhoneSection from './ProfileSections/PhoneSection.js';
 import NameSection from './ProfileSections/NameSection.js';
 import JobSection from './ProfileSections/JobSection.js';
+import ImageSection from './ProfileSections/ImageSection.js';
+import ProfileCircle from '../ProfileCircle.js'; // Importiamo ProfileCircle
 import './ProfileHome.css';
 
 const ProfileHome = () => {
-  const [userData, setUserData] = useState(null); // Stato per i dati dell'utente dal DB
-  const [emailVerified, setEmailVerified] = useState(false); // Stato per la verifica dell'email
+  const [userData, setUserData] = useState(null);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [updatedData, setUpdatedData] = useState({
     email: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
     job: '',
-  }); // Stato per aggiornamenti in tempo reale
-  const [notification, setNotification] = useState(null); // Stato per le notifiche
+  });
+  const [notification, setNotification] = useState(null);
+  const [showImageOptions, setShowImageOptions] = useState(false);
 
-  // Funzione per caricare i dati dell'utente
+  // Funzione per caricare i dati utente
   const fetchUserData = async () => {
     if (auth.currentUser) {
-      const isGoogleLogin = auth.currentUser.providerData.some(
-        (provider) => provider.providerId === 'google.com'
-      );
-
-      if (!isGoogleLogin) {
-        // Carica i dati utente da Firestore se l'utente non è loggato con Google
-        const userRef = doc(db, 'users', auth.currentUser.uid);
-        const userSnapshot = await getDoc(userRef);
-        if (userSnapshot.exists()) {
-          const data = userSnapshot.data();
-          setUserData(data); // Imposta i dati utente
-          setUpdatedData(data); // Imposta i dati aggiornabili
-          setEmailVerified(auth.currentUser.emailVerified); // Verifica email
-        }
-      } else {
-        // Imposta i dati dell'utente se l'accesso è tramite Google
-        const data = { email: auth.currentUser.email, firstName: auth.currentUser.displayName || '', lastName: '' };
+      const userRef = doc(db, 'users', auth.currentUser.uid);
+      const userSnapshot = await getDoc(userRef);
+      if (userSnapshot.exists()) {
+        const data = userSnapshot.data();
         setUserData(data);
         setUpdatedData(data);
         setEmailVerified(auth.currentUser.emailVerified);
@@ -49,36 +39,73 @@ const ProfileHome = () => {
   };
 
   useEffect(() => {
-    fetchUserData(); // Carica i dati appena il componente è montato
+    fetchUserData();
   }, []);
 
-  const handleUpdate = async () => {
-    if (auth.currentUser) {
-      const userRef = doc(db, 'users', auth.currentUser.uid);
-      await updateDoc(userRef, updatedData);
-      setNotification({ message: 'Dati aggiornati con successo', type: 'success' });
+  const handleImageChange = async (action) => {
+    if (action === 'remove') {
+      // Rimuovi l'immagine dal profilo
+      await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+        profilePicture: null,
+      });
+      setUserData((prevData) => ({ ...prevData, profilePicture: null }));
+    } else if (action === 'upload') {
+      // Mostra la sezione per caricare una nuova immagine
+      setShowImageOptions(true);
     }
   };
 
-  const handleEmailVerification = async () => {
-    if (auth.currentUser && !emailVerified) {
-      await sendEmailVerification(auth.currentUser);
-      setNotification({ message: 'Email inviata per la verifica', type: 'info' });
-    }
+  const handleCancelImageEdit = () => {
+    setShowImageOptions(false);
   };
 
   return (
-    <div className="profile-home">
-      {notification && <Notification message={notification.message} type={notification.type} />}
-      <EmailSection email={updatedData.email} onEmailChange={(e) => setUpdatedData({ ...updatedData, email: e.target.value })} />
-      <PhoneSection phoneNumber={updatedData.phoneNumber} onPhoneChange={(e) => setUpdatedData({ ...updatedData, phoneNumber: e.target.value })} />
-      <NameSection firstName={updatedData.firstName} lastName={updatedData.lastName} onNameChange={(e) => setUpdatedData({ ...updatedData, [e.target.name]: e.target.value })} />
-      <JobSection job={updatedData.job} onJobChange={(e) => setUpdatedData({ ...updatedData, job: e.target.value })} />
-      
-      <button className="update-button" onClick={handleUpdate}>Modifica</button>
-      <button className="verify-email-button" onClick={handleEmailVerification}>
-        {emailVerified ? 'Email Verificata' : 'Verifica Email'}
-      </button>
+    <div className="profile-container">
+      {notification && (
+        <Notification message={notification.message} type={notification.type} onClose={() => setNotification(null)} />
+      )}
+
+      <div className="profile-info">
+        <h2>Profilo Utente</h2>
+
+        {userData && (
+          <>
+            {/* Sezioni per Email, Telefono, Nome, Professione */}
+            <EmailSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              emailVerified={emailVerified}
+              setEmailVerified={setEmailVerified}
+              setNotification={setNotification}
+            />
+            <PhoneSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+            <NameSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+            <JobSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+            <ImageSection
+              userData={userData}
+              updatedData={updatedData}
+              setUpdatedData={setUpdatedData}
+              setNotification={setNotification}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
