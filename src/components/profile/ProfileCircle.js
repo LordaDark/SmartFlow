@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { auth } from '../login/firebaseConfig/firebaseConfig.js'; 
+import AnimatedBackground from './AnimatedBackground.js';  // Importa il componente per lo sfondo animato
 
 const db = getFirestore();
 
@@ -33,7 +33,7 @@ function ProfileCircle() {
           if (userData.hasImageChoice && userData.profileImage) {
             profilePic = userData.profileImage; // Mostra l'immagine se è disponibile e hasImageChoice è true
           } else {
-            profilePic = generateDefaultProfilePic(userData.firstName); // Usa l'avatar di default
+            profilePic = null;  // Non generiamo un'immagine di default, useremo lo sfondo animato
           }
   
           console.log('Profile picture URL:', profilePic);
@@ -51,12 +51,6 @@ function ProfileCircle() {
     }
   }, []);    
 
-  // Funzione per generare un'immagine del profilo di default
-  const generateDefaultProfilePic = (name) => {
-    const letter = name ? name.charAt(0).toUpperCase() : 'U';
-    return `https://ui-avatars.com/api/?name=${letter}&background=random&color=fff&size=128`;
-  };
-
   // Funzione per gestire il click sull'avatar
   const handleClick = () => {
     if (location.pathname === '/') {
@@ -72,8 +66,14 @@ function ProfileCircle() {
       {loading ? (
         <div className="profile-image-placeholder">...</div>
       ) : (
-        // Altrimenti mostriamo l'immagine del profilo
-        <img src={profilePicture} alt="Profile" className="profile-image" />
+        // Altrimenti mostriamo l'immagine del profilo o lo sfondo animato
+        <div className="profile-image">
+          {profilePicture ? (
+            <img src={profilePicture} alt="Profile" />
+          ) : (
+            <AnimatedBackground /> // Mostra lo sfondo animato
+          )}
+        </div>
       )}
     </div>
   );

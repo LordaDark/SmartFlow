@@ -1,0 +1,6 @@
+.animated-background {
+background-color: transparent;
+display: block;
+width: 128px; /* Puoi cambiare la larghezza */
+height: 128px; /* Puoi cambiare l'altezza */
+}
