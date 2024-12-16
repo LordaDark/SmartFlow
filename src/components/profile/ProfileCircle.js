@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { auth } from '../login/firebaseConfig/firebaseConfig.js'; 
 import AnimatedBackground from './AnimatedBackground.js';  // Importa il componente per lo sfondo animato
 
 const db = getFirestore();
