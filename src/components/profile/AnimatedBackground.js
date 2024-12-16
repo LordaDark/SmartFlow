@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './AnimatedBackground.css'; // Assicurati di avere lo stile nel CSS
+import './AnimatedBackground.css';
 
 const AnimatedBackground = () => {
   const canvasRef = useRef(null);
-  
+
   // Palette di colori chiari e variabili
   const colors = [
     '#A7C7E7', '#F6D1A1', '#F4E1C1', '#D1E7F4', '#F2D1D1', '#D3E2C8', '#F2E8D5', '#A1D8B0',
     '#E1F7D5', '#F9E1D2', '#D1B9F2', '#B6D1F2', '#F2C6D1', '#F1F0A7', '#C1F2E4', '#E4D1F2'
   ];
-  
+
   // Stato dei colori che vengono usati nel gradiente
   const [gradientColors, setGradientColors] = useState([colors[0], colors[1], colors[2]]);
-  const [time, setTime] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,17 +51,11 @@ const AnimatedBackground = () => {
       // Mischiamo i due colori scelti
       const mixedColor = mixColors(color1, color2);
 
-      // Aggiungiamo il colore miscelato alla lista dei colori
-      const newColors = [...gradientColors, mixedColor];
-
       // Creiamo il gradiente con i colori attuali
       gradient.addColorStop(0, gradientColors[0]);
       gradient.addColorStop(0.33, gradientColors[1]);
       gradient.addColorStop(0.66, gradientColors[2]);
       gradient.addColorStop(1, mixedColor);
-
-      // Aggiungiamo il nuovo colore alla lista di colori
-      setGradientColors(newColors);
 
       return gradient;
     };
@@ -79,9 +72,6 @@ const AnimatedBackground = () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Incrementa il tempo per il cambiamento continuo
-      setTime((prevTime) => prevTime + 0.003); // Rallenta per ottenere un cambiamento più graduale
-
       // Rende l'animazione continua
       animationFrameId = requestAnimationFrame(draw);
     };
@@ -93,7 +83,7 @@ const AnimatedBackground = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [gradientColors]);
+  }, []); // Dipendenze vuote per evitare il ciclo infinito
 
   return <canvas ref={canvasRef} className="animated-background" width="128" height="128"></canvas>;
 };
