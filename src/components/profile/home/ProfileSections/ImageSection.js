@@ -1,14 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfileCircle from '../../ProfileCircle.js';
+import Notification from '../../../notification/Notification.js';
+import cloudinaryUpload from '../../../services/cloudinaryService.js';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebaseConfig/firebaseConfig.js';
 
 const ImageSection = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
-  const [isImageUploaded, setIsImageUploaded] = useState(false); // Stato per tracciare se l'immagine è stata caricata
-  const [uploadComplete, setUploadComplete] = useState(false); // Nuovo stato per gestire il colore del div
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isImageSelected, setIsImageSelected] = useState(true); // Stato per il toggle
 
-  // Funzione per attivare la selezione del file tramite clic
+  // Recupera i dati dell'utente corrente
+  useEffect(() => {
+    const user = getAuth().currentUser;
+    if (user) {
+      setCurrentUser(user);
+      fetchUserProfileImage(user.uid);
+      fetchUserImageChoice(user.uid); // Recupera la scelta dell'immagine
+    }
+  }, []);
+
+  // Funzione per recuperare l'immagine del profilo dell'utente
+  const fetchUserProfileImage = async (uid) => {
+    const userRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      setImageUrl(userDoc.data().profileImage || null);
+    }
+  };
+
+  // Funzione per recuperare la scelta immagine/codice
+  const fetchUserImageChoice = async (uid) => {
+    const userRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      const hasImageChoice = userDoc.data().hasImageChoice;
+      setIsImageSelected(hasImageChoice !== undefined ? hasImageChoice : true); // Imposta il valore iniziale
+    }
+  };
+
   const handleUploadClick = () => {
     document.getElementById('file-input').click();
   };
@@ -17,26 +56,67 @@ const ImageSection = () => {
     setIsUploading(true);
   };
 
-  // Gestisce il caricamento dell'immagine tramite input file
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log('File selezionato:', file);
-      setIsUploading(false);
-      setIsImageUploaded(true); // Cambia stato dopo il caricamento
-      setUploadComplete(true); // Segna il completamento del caricamento
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+        setSelectedFile(file);
+        setIsUploading(false);
+        setIsImageUploaded(true);
+        setUploadComplete(true);
+        setNotification({ message: 'Immagine caricata con successo!', type: 'success' });
+      };
+      reader.onerror = () => {
+        setIsUploading(false);
+        setIsImageUploaded(false);
+        setUploadComplete(false);
+        setNotification({ message: 'Errore durante il caricamento. Riprova.', type: 'error' });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  // Gestisce la cancellazione del caricamento
+  const handleSaveImage = async () => {
+    if (!selectedFile || !currentUser) return;
+
+    try {
+      setNotification(null);
+      setIsUploading(true);
+
+      // Carica l'immagine su Cloudinary
+      const uploadedImageUrl = await cloudinaryUpload(selectedFile, currentUser.uid);
+
+      // Salva il link dell'immagine su Firestore
+      await updateDoc(doc(db, 'users', currentUser.uid), {
+        profileImage: uploadedImageUrl,
+      });
+
+      setIsUploading(false);
+      setNotification({ message: 'Immagine caricata su Cloudinary con successo!', type: 'success' });
+
+      // Aggiorna lo stato con la nuova immagine
+      setImageUrl(uploadedImageUrl);
+
+      // Chiude la modifica dopo il salvataggio riuscito
+      handleCancel();
+    } catch (error) {
+      setIsUploading(false);
+      setNotification({ message: 'Errore durante il caricamento su Cloudinary.', type: 'error' });
+      console.error(error);
+    }
+  };
+
   const handleCancel = () => {
     setIsEditing(false);
     setIsUploading(false);
-    setIsImageUploaded(false); // Resetta lo stato quando si annulla
-    setUploadComplete(false); // Resetta lo stato di completamento
+    setIsImageUploaded(false);
+    setUploadComplete(false);
+    setImagePreview(null);
+    setSelectedFile(null);
   };
 
-  // Gestisce gli eventi di drag
   const handleDragOver = (e) => {
     e.preventDefault();
     setIsDragActive(true);
@@ -51,51 +131,93 @@ const ImageSection = () => {
     setIsDragActive(false);
     const file = e.dataTransfer.files[0];
     if (file) {
-      console.log('File trascinato:', file);
-      setIsUploading(false);
-      setIsImageUploaded(true); // Cambia stato dopo il caricamento
-      setUploadComplete(true); // Segna il completamento del caricamento
+      handleFileSelect({ target: { files: [file] } });
+    }
+  };
+
+  const closeNotification = () => {
+    setNotification(null);
+  };
+
+  const handleChoiceToggle = () => {
+    const newChoice = !isImageSelected;
+    setIsImageSelected(newChoice);
+
+    // Invia la scelta (true per immagine, false per codice) a Firebase
+    if (currentUser) {
+      const userRef = doc(db, 'users', currentUser.uid);
+      updateDoc(userRef, { hasImageChoice: newChoice });
     }
   };
 
   return (
     <div className="info-section">
-      {isUploading || uploadComplete ? (
-        // Barra di caricamento immagine
-        <div
-          className={`upload-bar ${isDragActive ? 'drag-active' : ''} ${uploadComplete ? 'uploaded' : ''}`}
-          onClick={handleUploadClick} // Usa il click per attivare il file input
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <p>{isDragActive ? 'Rilascia l’immagine qui' : 'Clicca o trascina un’immagine per caricarla'}</p>
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleFileSelect}
-            style={{ display: 'none' }} // Nasconde l'input file
-          />
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {uploadComplete ? (
+        <div className="image-preview-section">
+          <img src={imagePreview} alt="Anteprima immagine" className="image-preview" />
+          <div className="preview-button">
+            <button className="save-button" onClick={handleSaveImage}>Salva immagine</button>
+            <button className="cancel-button" onClick={handleCancel}>Annulla</button>
+          </div>
         </div>
       ) : (
-        // Schermata normale
         <>
-          <p><strong>Immagine profilo:</strong></p>
-          <div className="data-container">
-            <div className="data-display-container">
-              <ProfileCircle />
-              {isEditing ? (
-                <div className="edit-options">
-                  <button className="upload-button" onClick={handleUploading}>Carica immagine</button>
-                  <button className="delete-button">Elimina immagine profilo</button>
-                  <button className="cancel-button" onClick={handleCancel}>Annulla</button>
-                </div>
-              ) : (
-                <button className="edit-button" onClick={() => setIsEditing(true)}>Modifica</button>
-              )}
+          {isUploading || isDragActive ? (
+            <div
+              className={`upload-bar ${isDragActive ? 'drag-active' : ''}`}
+              onClick={handleUploadClick}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <p>{isDragActive ? 'Rilascia l’immagine qui' : 'Clicca o trascina un’immagine per caricarla'}</p>
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                style={{ display: 'none' }}
+              />
             </div>
-          </div>
+          ) : (
+            <>
+              <p><strong>Immagine profilo:</strong></p>
+              <div className="data-container">
+                <div className="data-display-container">
+                  <ProfileCircle imageUrl={imageUrl} />
+                  {isEditing ? (
+                    <div className="edit-options">
+
+                      <div className='edit-image'>
+                        {/* Interruttore per scegliere tra immagine e codice */}
+                        <span>{isImageSelected ? 'Immagine' : 'Codice'}</span>
+                        <label className="switch">
+                          <input
+                            type="checkbox"
+                            checked={isImageSelected}
+                            onChange={handleChoiceToggle}
+                          />
+                          <span className="slider round"></span>
+                        </label>
+                      </div>
+
+                      <button className="upload-button" onClick={handleUploading}>Carica immagine</button>
+                      <button className="cancel-button" onClick={handleCancel}>Annulla</button>
+                    </div>
+                  ) : (
+                    <button className="edit-button" onClick={() => setIsEditing(true)}>Modifica</button>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

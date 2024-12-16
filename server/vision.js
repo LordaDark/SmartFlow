@@ -1,7 +1,6 @@
 import { v1 as vision } from '@google-cloud/vision';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { VisionClient } from '@google-cloud/vision'; // Per Cloud Vision
 
 // Ottieni il percorso corrente del file
 const __filename = fileURLToPath(import.meta.url);
@@ -27,8 +26,6 @@ export const analyzeImage = async (imagePath) => {
     console.error('Errore nell\'analisi dell\'immagine:', error);
   }
 };
-
-const client = new VisionClient();
 
 // Funzione per analizzare la descrizione dell'utente
 export const analyzeDescriptionWithAI = async (description) => {

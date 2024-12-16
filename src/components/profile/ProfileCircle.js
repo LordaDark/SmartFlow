@@ -2,51 +2,67 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { auth } from '../login/firebaseConfig/firebaseConfig.js'; // Assicurati che il path sia corretto
+import { auth } from '../login/firebaseConfig/firebaseConfig.js'; 
 
-const db = getFirestore(); // Inizializziamo il Firestore
+const db = getFirestore();
 
 function ProfileCircle() {
   const [profilePicture, setProfilePicture] = useState(null);
-  const [userName, setUserName] = useState(''); // Impostiamo un nome predefinito
-  const [loading, setLoading] = useState(true); // Stato per gestire il caricamento
-  const navigate = useNavigate(); // Per la navigazione tra le pagine
-  const location = useLocation(); // Per conoscere la pagina corrente
+  const [userName, setUserName] = useState('');
+  const [loading, setLoading] = useState(true); 
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Effettua il fetch dei dati dell'utente all'avvio
   useEffect(() => {
     const user = getAuth().currentUser;
     if (user) {
       const fetchUserData = async () => {
-        setLoading(true); // Indichiamo che i dati sono in fase di caricamento
-        const docRef = doc(db, "users", user.uid); // Otteniamo il documento dell'utente da Firestore
-        const docSnap = await getDoc(docRef); // Recuperiamo il documento
+        console.log('User found:', user.uid);
+        setLoading(true);
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const userData = docSnap.data(); // I dati dell'utente
-          setUserName(userData.firstName || 'Utente'); // Impostiamo il nome dell'utente (default se non presente)
-          // Impostiamo l'immagine del profilo, o una predefinita se non disponibile
-          setProfilePicture(
-            userData.profilePicture || generateDefaultProfilePic(userData.firstName)
-          );
+          const userData = docSnap.data();
+          console.log('User data:', userData);
+  
+          setUserName(userData.firstName || 'Utente');
+  
+          // Verifica se hasImageChoice è true e se profileImage è disponibile
+          let profilePic;
+          if (userData.hasImageChoice && userData.profileImage) {
+            profilePic = userData.profileImage; // Mostra l'immagine se è disponibile e hasImageChoice è true
+          } else {
+            profilePic = generateDefaultProfilePic(userData.firstName); // Usa l'avatar di default
+          }
+  
+          console.log('Profile picture URL:', profilePic);
+          setProfilePicture(profilePic);
+          
+          console.log('ProfileImage:', profilePic);
+        } else {
+          console.log('No user data found');
         }
-        setLoading(false); // Terminato il caricamento dei dati
+        setLoading(false);
       };
-      fetchUserData(); // Chiamiamo la funzione per fare il fetch
+      fetchUserData();
+    } else {
+      console.log('No user is logged in');
     }
-  }, []);
+  }, []);    
 
   // Funzione per generare un'immagine del profilo di default
   const generateDefaultProfilePic = (name) => {
-    const letter = name ? name.charAt(0).toUpperCase() : 'U'; // Prendiamo la prima lettera del nome
-    return `https://ui-avatars.com/api/?name=${letter}&background=random&color=fff&size=128`; // URL per generare un avatar
+    const letter = name ? name.charAt(0).toUpperCase() : 'U';
+    return `https://ui-avatars.com/api/?name=${letter}&background=random&color=fff&size=128`;
   };
 
   // Funzione per gestire il click sull'avatar
   const handleClick = () => {
     if (location.pathname === '/') {
-      navigate('/dashboard'); // Se siamo nella home, andiamo alla dashboard
+      navigate('/dashboard');
     } else {
-      navigate('/profile'); // Altrimenti, andiamo alla pagina del profilo
+      navigate('/profile');
     }
   };
 

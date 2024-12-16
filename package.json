@@ -12,12 +12,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "aws-sdk": "^2.1692.0",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "cloudinary": "^2.5.1",
     "cloudinary-core": "^2.13.1",
     "cloudinary-react": "^1.8.1",
+    "cors": "^2.8.5",
     "crypto-browserify": "^3.12.1",
-    "express": "^4.21.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "firebase": "^11.0.2",
     "font-awesome": "^4.7.0",
     "https-browserify": "^1.0.0",
@@ -74,5 +76,10 @@
         "varsIgnorePattern": "auth|docRef"
       }
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "eslint.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

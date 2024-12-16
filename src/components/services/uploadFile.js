@@ -1,6 +1,6 @@
 import supabase from './supabaseService';
 
-export const uploadFile = async (file, folder = '') => {
+export const uploadFile = async (file, folder = 'uploads') => {
   try {
     const fileName = `${folder}/${Date.now()}-${file.name}`;
     const { data, error } = await supabase.storage
@@ -13,7 +13,7 @@ export const uploadFile = async (file, folder = '') => {
       .from('smartflow-files')
       .getPublicUrl(fileName);
 
-    return publicUrl;
+    return publicUrl.publicUrl; // URL del file caricato
   } catch (error) {
     console.error('Errore durante il caricamento su Supabase:', error.message);
     throw error;

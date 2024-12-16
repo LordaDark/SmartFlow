@@ -1,44 +1,32 @@
 import express from 'express';
-import path from 'path';
-import multer from 'multer';
-import { analyzeImage } from './vision.js'; // Se hai già una funzione per l'analisi
-import { fileURLToPath } from 'url';
-import { ImageAnnotatorClient } from '@google-cloud/vision';
+import bodyParser from 'body-parser';
+import { v2 as cloudinary } from 'cloudinary';
 
 const app = express();
-const port = 3000;
+app.use(bodyParser.json());
 
-// Percorso per servire i file statici della build React
-app.use(express.static(path.join(__dirname, '../build')));
+// Configura Cloudinary con API Key e Secret
+cloudinary.config({
+  cloud_name: 'bogdan0',
+  api_key: '273281668831141', // Inserisci qui la tua API Key
+  api_secret: 'mFw53g3EkcGucGypVKblAE-iGso', // Inserisci qui il tuo API Secret
+});
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Configura il client della Vision API
-const client = new ImageAnnotatorClient();
-
-app.post('/ai-endpoint', async (req, res) => {
-  const { description } = req.body;  // Ottieni la descrizione inviata
+// Endpoint per eliminare immagini
+app.post('/delete-image', async (req, res) => {
+  const { publicId } = req.body;
 
   try {
-    // Qui puoi implementare la logica di invio descrizione a Cloud Vision
-    // Se hai bisogno di inviare un'immagine, usa la Vision API per analizzarla.
-    // Esempio di chiamata per l'analisi di testo nell'immagine:
-    
-    const [result] = await client.textDetection(description); // Adatta la chiamata alle tue esigenze
-    console.log('Descrizione ricevuta dall\'utente:', description);
-    console.log('Risultato:', result);
-
-    res.json({ result: result }); // Rispondi con il risultato dell'AI
-
+    const result = await cloudinary.uploader.destroy(publicId);
+    res.status(200).json({ success: true, result });
   } catch (error) {
-    console.error('Errore durante l\'analisi dell\'AI:', error);
-    res.status(500).json({ error: 'Errore nell\'analisi dell\'AI' });
+    console.error('Errore durante la distruzione dell’immagine:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// Altri endpoint come il caricamento delle immagini (già presente nel tuo server)
-
-app.listen(port, () => {
-  console.log(`Server in ascolto sulla porta ${port}`);
+// Avvia il server
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`Server proxy in esecuzione su http://localhost:${PORT}`);
 });
