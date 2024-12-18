@@ -85,7 +85,7 @@ const AnimatedBackground = () => {
     };
   }, []); // Dipendenze vuote per evitare il ciclo infinito
 
-  return <canvas ref={canvasRef} className="animated-background" width="128" height="128"></canvas>;
+  return <canvas ref={canvasRef} className="animated-background"></canvas>;
 };
 
 export default AnimatedBackground;

@@ -1,6 +1,33 @@
 .animated-background {
-background-color: transparent;
-display: block;
-width: 128px; /* Puoi cambiare la larghezza */
-height: 128px; /* Puoi cambiare l'altezza */
+    background-color: transparent;
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d4af37;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.profile-circle,
+.profile-image,
+.profile-initial {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d4af37;
+}
+
+#NameP {
+    z-index: 1000;
+    color: black;
+}
+
+.profile-initial {
+    display: flex;
 }

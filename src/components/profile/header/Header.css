@@ -36,16 +36,6 @@
     background-color: #218838; /* Colore verde scuro al passaggio del mouse */
 }
 
-/* ProfileCircle style */
-.profile-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #d4af37;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
 /* Media query per schermi con larghezza massima di 768px */
 @media (max-width: 768px) {
     .header {
@@ -81,11 +71,6 @@
         padding: 10px 0;
         text-align: center;
     }
-}
-
-/* Stile per il profilo utente */
-.profile-circle:hover {
-    background-color: #c79c2b;
 }
 
 /* Quando shrinking è attivo, nasconde anche il bottone */

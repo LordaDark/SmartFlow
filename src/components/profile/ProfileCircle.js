@@ -72,7 +72,10 @@ function ProfileCircle() {
           {profilePicture ? (
             <img src={profilePicture} alt="Profile" />
           ) : (
-            <AnimatedBackground /> // Mostra lo sfondo animato
+            <div className="profile-initial">
+              <AnimatedBackground /> {/* Mostra lo sfondo animato */}
+              <span id='NameP'>{userName.charAt(0).toUpperCase()}</span> {/* Mostra la prima lettera del nome */}
+            </div>
           )}
         </div>
       )}
