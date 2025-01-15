@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import spacy
 from flask_cors import CORS
+import os
 
 # Crea l'app Flask
 app = Flask(__name__)
@@ -67,4 +68,5 @@ def generate_command():
         return jsonify({"command": f"Comando sconosciuto per azione: {action}, target: {target}"}), 400
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Ottieni la porta da Render o usa 5000 come fallback
+    app.run(host="0.0.0.0", port=port, debug=True)
