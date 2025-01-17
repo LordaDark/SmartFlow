@@ -68,5 +68,6 @@ def generate_command():
         return jsonify({"command": f"Comando sconosciuto per azione: {action}, target: {target}"}), 400
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Ottieni la porta da Render o usa 5000 come fallback
-    app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render fornisce la variabile PORT
+    print(f"Esecuzione su porta: {port}")  # Log per vedere quale porta è in uso
+    app.run(host='0.0.0.0', port=port)  # Ascolta su tutte le interfacce IP disponibili
